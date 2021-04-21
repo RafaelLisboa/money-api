@@ -1,6 +1,10 @@
 package br.com.rafael.moneyapi.model;
 
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import java.util.Objects;
 
 @Entity
@@ -10,6 +14,9 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @NotBlank
     @Column(name = "category_name")
     private String name;
 
