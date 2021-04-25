@@ -34,7 +34,6 @@ public class PersonResource {
     @GetMapping("/{id}")
     public ResponseEntity<Person> findByID(@PathVariable Long id) {
         Optional<Person> personOptional = personRepository.findById(id);
-
         return personOptional.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(personOptional.get());
     }
 
@@ -45,5 +44,10 @@ public class PersonResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(personPersisted);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void remove(@PathVariable Long id) {
+        personRepository.deleteById(id);
+    }
 
 }

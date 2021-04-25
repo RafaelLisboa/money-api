@@ -14,7 +14,7 @@ CREATE TABLE person
   DEFAULT CHARSET = utf8;
 
 INSERT INTO person (name, active, public_place, number, complement, district, postal_code, city, state)
-VALUES ('Rafael Borges', TRUE, 'Av. Santa Catarina', '1311', 'Casa 8', 'Jabaquara', '04378300', 'São Paulo', 'SP');
+VALUES ('Rafael Borges', TRUE, 'Av. Bla bla bla', '1311', 'Casa 8', 'Jabaquara', '0404420', 'São Paulo', 'SP');
 INSERT INTO person (name, active, public_place, number, complement, district, postal_code, city, state)
 VALUES ('João Jeans', TRUE, 'Rua das Calças', '3311', null, 'Vestimentas', '0435700', 'Calçalandia', 'CL');
 INSERT INTO person (name, active, public_place, number, complement, district, postal_code, city, state)
