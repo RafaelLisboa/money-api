@@ -3,6 +3,7 @@ package br.com.rafael.moneyapi.resource;
 import br.com.rafael.moneyapi.event.CreatedResourceEvent;
 import br.com.rafael.moneyapi.model.Person;
 import br.com.rafael.moneyapi.repository.PersonRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,17 @@ public class PersonResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remove(@PathVariable Long id) {
         personRepository.deleteById(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Person> updatePerson(@PathVariable Long id, @Valid @RequestBody Person person) {
+        Optional<Person> savedPerson = personRepository.findById(id);
+        if (savedPerson.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        BeanUtils.copyProperties(person, savedPerson.get(), "id");
+        personRepository.save(savedPerson.get());
+        return ResponseEntity.ok(savedPerson.get());
     }
 
 }
