@@ -3,9 +3,11 @@ package br.com.rafael.moneyapi.resource;
 import br.com.rafael.moneyapi.event.CreatedResourceEvent;
 import br.com.rafael.moneyapi.model.Person;
 import br.com.rafael.moneyapi.repository.PersonRepository;
+import br.com.rafael.moneyapi.service.PersonService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,9 @@ public class PersonResource {
 
     @Autowired
     PersonRepository personRepository;
+
+    @Autowired
+    PersonService personService;
 
     @Autowired
     ApplicationEventPublisher eventPublisher;
@@ -53,13 +58,8 @@ public class PersonResource {
 
     @PutMapping("/{id}")
     public ResponseEntity<Person> updatePerson(@PathVariable Long id, @Valid @RequestBody Person person) {
-        Optional<Person> savedPerson = personRepository.findById(id);
-        if (savedPerson.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        BeanUtils.copyProperties(person, savedPerson.get(), "id");
-        personRepository.save(savedPerson.get());
-        return ResponseEntity.ok(savedPerson.get());
+        Person savedPerson = personService.update(id, person);
+        return ResponseEntity.ok(savedPerson);
     }
 
 }
