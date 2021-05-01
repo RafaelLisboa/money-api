@@ -1,8 +1,10 @@
 package br.com.rafael.moneyapi.event;
 
 import org.springframework.context.ApplicationEvent;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
+import java.net.URI;
 
 public class CreatedResourceEvent extends ApplicationEvent {
 
@@ -21,11 +23,9 @@ public class CreatedResourceEvent extends ApplicationEvent {
         this.response = response;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public HttpServletResponse getResponse() {
-        return response;
+    public void addHeaderLocation() {
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
+                .buildAndExpand(id).toUri();
+        response.setHeader("Location", uri.toASCIIString());
     }
 }

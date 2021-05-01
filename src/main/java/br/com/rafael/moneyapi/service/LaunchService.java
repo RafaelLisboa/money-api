@@ -3,7 +3,6 @@ package br.com.rafael.moneyapi.service;
 import br.com.rafael.moneyapi.model.Launch;
 import br.com.rafael.moneyapi.repository.LaunchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +21,15 @@ public class LaunchService {
     public Optional<Launch> getById(Long id) {
         Optional<Launch> launch = launchRepository.findById(id);
         return launch;
+    }
+
+    public void delete(Long id) {
+        launchRepository.deleteById(id);
+    }
+
+    public Launch save(Launch launch) {
+        Launch launchPersisted = launchRepository.save(launch);
+        return launchPersisted;
     }
 
 }

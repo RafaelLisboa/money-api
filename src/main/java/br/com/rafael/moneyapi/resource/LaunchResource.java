@@ -1,14 +1,16 @@
 package br.com.rafael.moneyapi.resource;
 
+import br.com.rafael.moneyapi.event.CreatedResourceEvent;
 import br.com.rafael.moneyapi.model.Launch;
 import br.com.rafael.moneyapi.service.LaunchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +20,10 @@ public class LaunchResource {
 
     @Autowired
     LaunchService launchService;
+
+    @Autowired
+    ApplicationEventPublisher eventPublisher;
+
 
     @GetMapping
     public List<Launch> getAll() {
@@ -29,6 +35,20 @@ public class LaunchResource {
         Optional<Launch> launch = launchService.getById(id);
         return launch.isEmpty() ?
                 ResponseEntity.notFound().build() : ResponseEntity.ok(launch.get());
-
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        launchService.delete(id);
+    }
+
+
+    @PostMapping
+    public ResponseEntity<Launch> save(@Valid @RequestBody Launch launch, HttpServletResponse response) {
+        Launch launchPersisted = launchService.save(launch);
+        eventPublisher.publishEvent(new CreatedResourceEvent(this, response, launchPersisted.getId()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(launchPersisted);
+    }
+
 }

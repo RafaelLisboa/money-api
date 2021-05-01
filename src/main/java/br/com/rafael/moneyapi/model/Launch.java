@@ -1,6 +1,8 @@
 package br.com.rafael.moneyapi.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -12,19 +14,33 @@ public class Launch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @NotBlank
     private String description;
+
+    @NotNull
     private LocalDate dueDate;
+
     private LocalDate paymentDate;
+
+    @NotNull
     private BigDecimal value;
+
     private String obs;
+
+    @NotNull
     @Enumerated(EnumType.STRING)
     private LaunchType type;
 
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "category_id")
     private Category category;
 
+
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "person_id")
     private Person person;
 

@@ -76,6 +76,15 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>7.8.2</version>
+                <configuration>
+                    <url>jdbc:mysql://localhost/moneyapi</url>
+                    <user>root</user>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

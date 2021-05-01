@@ -5,7 +5,6 @@ import br.com.rafael.moneyapi.repository.PersonRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -25,4 +24,8 @@ public class PersonService {
         return personRepository.save(savedPerson.get());
     }
 
+    public Optional<Person> getById(Long id) {
+        Optional<Person> person = personRepository.findById(id);
+        return person;
+    }
 }
