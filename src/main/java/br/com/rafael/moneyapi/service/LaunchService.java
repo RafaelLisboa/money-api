@@ -1,7 +1,11 @@
 package br.com.rafael.moneyapi.service;
 
 import br.com.rafael.moneyapi.model.Launch;
+import br.com.rafael.moneyapi.model.Person;
 import br.com.rafael.moneyapi.repository.LaunchRepository;
+import br.com.rafael.moneyapi.repository.PersonRepository;
+import br.com.rafael.moneyapi.repository.filter.LaunchFilter;
+import br.com.rafael.moneyapi.service.exception.PersonNonexistentOrInactiveException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +18,11 @@ public class LaunchService {
     @Autowired
     private LaunchRepository launchRepository;
 
-    public List<Launch> getAll() {
-        return launchRepository.findAll();
+    @Autowired
+    private PersonRepository personRepository;
+
+    public List<Launch> getAll(LaunchFilter launchFilter) {
+        return launchRepository.filter(launchFilter);
     }
 
     public Optional<Launch> getById(Long id) {
@@ -28,8 +35,11 @@ public class LaunchService {
     }
 
     public Launch save(Launch launch) {
-        Launch launchPersisted = launchRepository.save(launch);
-        return launchPersisted;
+        Optional<Person> person = personRepository.findById(launch.getPerson().getId());
+        if (person.isEmpty()) {
+            throw new PersonNonexistentOrInactiveException();
+        }
+        return launchRepository.save(launch);
     }
 
 }
