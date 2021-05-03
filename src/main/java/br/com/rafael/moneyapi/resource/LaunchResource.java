@@ -19,10 +19,10 @@ import java.util.Optional;
 public class LaunchResource {
 
     @Autowired
-    LaunchService launchService;
+    private LaunchService launchService;
 
     @Autowired
-    ApplicationEventPublisher eventPublisher;
+    private ApplicationEventPublisher eventPublisher;
 
 
     @GetMapping
@@ -50,5 +50,6 @@ public class LaunchResource {
         eventPublisher.publishEvent(new CreatedResourceEvent(this, response, launchPersisted.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(launchPersisted);
     }
+
 
 }

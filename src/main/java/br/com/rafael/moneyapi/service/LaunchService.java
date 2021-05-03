@@ -12,7 +12,7 @@ import java.util.Optional;
 public class LaunchService {
 
     @Autowired
-    LaunchRepository launchRepository;
+    private LaunchRepository launchRepository;
 
     public List<Launch> getAll() {
         return launchRepository.findAll();

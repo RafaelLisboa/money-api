@@ -4,18 +4,14 @@ import br.com.rafael.moneyapi.event.CreatedResourceEvent;
 import br.com.rafael.moneyapi.model.Person;
 import br.com.rafael.moneyapi.repository.PersonRepository;
 import br.com.rafael.moneyapi.service.PersonService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,13 +20,13 @@ import java.util.Optional;
 public class PersonResource {
 
     @Autowired
-    PersonRepository personRepository;
+    private PersonRepository personRepository;
 
     @Autowired
-    PersonService personService;
+    private PersonService personService;
 
     @Autowired
-    ApplicationEventPublisher eventPublisher;
+    private ApplicationEventPublisher eventPublisher;
 
     @GetMapping
     public List<Person> list() {

@@ -1,7 +1,9 @@
 package br.com.rafael.moneyapi.exception;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -59,6 +60,18 @@ public class MoneyApiExceptionHandler extends ResponseEntityExceptionHandler {
         List<Error> errorList = List.of(new Error(messageReturnedForUser, messageReturnedForDeveloper));
 
         return handleExceptionInternal(ex, errorList, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler({DataIntegrityViolationException.class})
+    public ResponseEntity<Object> handleDataIntegrityEntity(WebRequest request, DataIntegrityViolationException ex) {
+        String messageReturnedForUser = messageSource.getMessage("resource.operation-not-allowed", null,
+                LocaleContextHolder.getLocale());
+
+        String messageReturnedForDeveloper = ExceptionUtils.getRootCauseMessage(ex);
+
+        List<Error> errorList = List.of(new Error(messageReturnedForUser, messageReturnedForDeveloper));
+
+        return handleExceptionInternal(ex, errorList, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     private List<Error> errorListCreator(BindingResult bindingResult) {

@@ -26,6 +26,10 @@ public class PersonService {
 
     public Optional<Person> getById(Long id) {
         Optional<Person> person = personRepository.findById(id);
+        if (person.isEmpty()) {
+            throw new EmptyResultDataAccessException(1);
+        }
         return person;
     }
+
 }

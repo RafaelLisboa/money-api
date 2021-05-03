@@ -11,7 +11,7 @@ import java.util.Optional;
 public class CategoryService {
 
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     public Optional<Category> getById(Long id) {
         return categoryRepository.findById(id);
