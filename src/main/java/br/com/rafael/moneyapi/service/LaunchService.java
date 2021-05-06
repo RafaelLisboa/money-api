@@ -7,9 +7,10 @@ import br.com.rafael.moneyapi.repository.PersonRepository;
 import br.com.rafael.moneyapi.repository.filter.LaunchFilter;
 import br.com.rafael.moneyapi.service.exception.PersonNonexistentOrInactiveException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,8 +22,8 @@ public class LaunchService {
     @Autowired
     private PersonRepository personRepository;
 
-    public List<Launch> getAll(LaunchFilter launchFilter) {
-        return launchRepository.filter(launchFilter);
+    public Page<Launch> getAll(LaunchFilter launchFilter, Pageable pageable) {
+        return launchRepository.filter(launchFilter, pageable);
     }
 
     public Optional<Launch> getById(Long id) {
@@ -41,5 +42,6 @@ public class LaunchService {
         }
         return launchRepository.save(launch);
     }
+
 
 }

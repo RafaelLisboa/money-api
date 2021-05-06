@@ -4,6 +4,9 @@ import br.com.rafael.moneyapi.model.Launch;
 import br.com.rafael.moneyapi.model.Launch_;
 import br.com.rafael.moneyapi.repository.filter.LaunchFilter;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,7 +24,7 @@ public class LaunchRepositoryImpl implements LaunchRepositoryQuery {
     private EntityManager entityManager;
 
     @Override
-    public List<Launch> filter(LaunchFilter launchFilter) {
+    public Page<Launch> filter(LaunchFilter launchFilter, Pageable pageable) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Launch> criteriaQuery = builder.createQuery(Launch.class);
         Root<Launch> root = criteriaQuery.from(Launch.class);
@@ -31,7 +34,28 @@ public class LaunchRepositoryImpl implements LaunchRepositoryQuery {
         criteriaQuery.where(predicates);
 
         TypedQuery<Launch> query = entityManager.createQuery(criteriaQuery);
-        return query.getResultList();
+        addPaginationRestrictions(query, pageable);
+        return new PageImpl<>(query.getResultList(), pageable, total(launchFilter));
+    }
+
+    private Long total(LaunchFilter launchFilter) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> criteriaQuery = builder.createQuery(Long.class);
+        Root<Launch> root = criteriaQuery.from(Launch.class);
+
+        Predicate[] predicates = createRestrictions(launchFilter, builder, root);
+        criteriaQuery.where(predicates);
+        criteriaQuery.select(builder.count(root));
+        return entityManager.createQuery(criteriaQuery).getSingleResult();
+    }
+
+    private void addPaginationRestrictions(TypedQuery<Launch> query, Pageable pageable) {
+        int currentPage = pageable.getPageNumber();
+        int totalRecordsPerPage = pageable.getPageSize();
+        int firstRecord = currentPage * totalRecordsPerPage;
+
+        query.setFirstResult(firstRecord);
+        query.setMaxResults(totalRecordsPerPage);
     }
 
     private Predicate[] createRestrictions(LaunchFilter launchFilter, CriteriaBuilder builder, Root<Launch> root) {

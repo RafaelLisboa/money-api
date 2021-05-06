@@ -20,4 +20,9 @@ VALUES ('João Jeans', TRUE, 'Rua das Calças', '3311', null, 'Vestimentas', '04
 INSERT INTO person (name, active, public_place, number, complement, district, postal_code, city, state)
 VALUES ('Maria Abacaxi', TRUE, 'Rua Frutas Maduras', '15', 'Ao Lado da Maça', 'Feira', '008366', 'Barraca de Abacaxi',
         'FR');
-
+INSERT INTO person (name, active, public_place, number, complement, district, postal_code, city, state)
+VALUES ('Pedro Alvares', 1, 'Rua Itapeva', '352', 'Ap 8 Bloco C', 'Paulista', '05352100', 'Capelinha', 'RJ');
+INSERT INTO person (name, active, public_place, number, complement, district, postal_code, city, state)
+VALUES ('Ricardo Felles', 1, 'Rua Sem Saida', '000', null, 'Americana', '68435151', 'Estadunidense', 'EU');
+INSERT INTO person (name, active, public_place, number, complement, district, postal_code, city, state)
+VALUES ('Marley Pererira', 0, 'Rua Pombal Cruzes', '1475', 'Ao lado do Metro', 'Divineia', '23554153', 'Elemar', 'RO');

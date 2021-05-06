@@ -2,11 +2,11 @@ package br.com.rafael.moneyapi.repository.launch;
 
 import br.com.rafael.moneyapi.model.Launch;
 import br.com.rafael.moneyapi.repository.filter.LaunchFilter;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface LaunchRepositoryQuery {
 
-    List<Launch> filter(LaunchFilter launchFilter);
+    Page<Launch> filter(LaunchFilter launchFilter, Pageable pageable);
 
 }

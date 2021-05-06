@@ -8,6 +8,7 @@ import java.net.URI;
 
 public class CreatedResourceEvent extends ApplicationEvent {
 
+    private static final long serialVersionUID = 1L;
     private Long id;
     private HttpServletResponse response;
 
