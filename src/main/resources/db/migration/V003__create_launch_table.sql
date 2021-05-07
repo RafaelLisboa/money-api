@@ -30,6 +30,8 @@ VALUES ('Netflix', '2019-06-03', '2019-06-03', '48.60', 'Plano Premium', 'DESPES
 INSERT INTO `launch` (`description`, `due_date`, `payment_date`, `value`, `type`, `category_id`, `person_id`)
 VALUES ('Açougue', '2019-06-05', '2019-06-05', '420.86', 'DESPESA', '3', '3');
 INSERT INTO launch (description, due_date, payment_date, value, obs, type, category_id, person_id)
-VALUES ('Reforma Garagem', '2020-06-08', '2020-08-03', 1236.65, 'Piso Quebrado e troca do telhado', 'DESPESA', 2, 4);
+VALUES ('Reforma Garagem', '2020-06-08', '2020-08-03', 1236.65, 'Piso Quebrado e troca do telhado', 'DESPESA', '2',
+        '4');
 INSERT INTO launch (description, due_date, payment_date, value, obs, type, category_id, person_id)
-VALUES ('Venda Carro', '2020-07-05', '2020-07-13', 32000.00, 'Venda para cobrir gastos de reformas', 'RECEITA', 7, 7);
+VALUES ('Venda Carro', '2020-07-05', '2020-07-13', 3200.00, 'Venda para cobrir gastos de reformas', 'RECEITA', '5',
+        '2');
