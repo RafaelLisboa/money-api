@@ -32,7 +32,7 @@ The controllers do not know and do not do any type of operation directly in the 
     - GET     /person returns all person
     - GET     /person/{id} returns person compatible with id
     - POST    /person a new person persists
-    - DELETE  /person/{id} removes the launch compatible with the id
+    - DELETE  /person/{id} removes the person compatible with the id
     - PUT     /person/{id} updates data of an already persisted person
   
   ### 💱 Category
