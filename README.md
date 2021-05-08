@@ -9,7 +9,7 @@
 </div>
 <br>
 <br>
-#### Project where I implement concepts such as query string, pagination, error handling in requests and packaging of the application in a Docker 🐳 container I used the Flyway library for versioning the database
+Project where I implement concepts such as query string, pagination, error handling in requests and packaging of the application in a Docker 🐳 container I used the Flyway library for versioning the database
 
 
 You can run the entire project on your machine (if you have the <a href="https://www.docker.com/">Docker<a/> installed) giving only one `docker compose up` on
